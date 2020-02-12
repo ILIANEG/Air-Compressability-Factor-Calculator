@@ -53,6 +53,8 @@ End Function
 Private Function findXu(A, B)
   Dim xu As Double, Dim fxu As Double
   xu = 0
-  fxu = calculateF(A, B, fxu)
-  do while(fxu <= 0)
-
+  Do Until fxu > 0
+    xu = xu + 0.5
+    fxu = calculateF(A, B, fxu)
+  Loop
+  findXu = xu
