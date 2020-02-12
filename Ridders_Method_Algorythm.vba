@@ -50,3 +50,9 @@ Private Function calculateF(A As Double, B As Double, X As Double) As Double
   calculateF = X * X * X - X * X + X * (A - B - B * B) - A * B
 End Function
 
+Private Function findXu(A, B)
+  Dim xu As Double, Dim fxu As Double
+  xu = 0
+  fxu = calculateF(A, B, fxu)
+  do while(fxu <= 0)
+
