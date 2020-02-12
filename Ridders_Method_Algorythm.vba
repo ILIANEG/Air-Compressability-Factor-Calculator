@@ -1,51 +1,52 @@
 Option Explicit
 
-Public Function solve(A, B as Double) as Double
-  Dim xl, xm, xu, fxl, fxm, fxu, xrOld, xrNew fxrNew, err as Double
-  Dim counter as Boolean
-  firstCycle = True 
+Public Function solve(A As Double, B As Double) As Double
+  Dim xl As Double, xm As Double, xu As Double, xr As Double, fxl As Double, fxm As Double, fxr As Double, fxu As Double, xrOld As Double, xrNew As Double, fxrNew As Double, err As Double
+  Dim firstCycle As Boolean
+  firstCycle = True
   err = 100
   xl = 0
-  xu = AB
+  xu = 2
   'while loop that runs Rider's algorythm until the seeking precision is reached
-  Do Until err < 0.000001
+  Do Until err < 0.0000000001
     xm = (xl + xu) / 2
-    fxl = Call calculateF(A, B, xl)
-    fxm = Call calculateF(A, B, xm)
-    fxu = Call calculateF(A, B, xu)
-    xrNew =  xm + (xm - xl) * ((fxl - fxu)/Abs(fxl - fxu) * fxm)/Sqr(fxm * fxm - fxl * fxu)
-    if firstCycle Then
+    fxl = calculateF(A, B, xl)
+    fxm = calculateF(A, B, xm)
+    fxu = calculateF(A, B, xu)
+    xrNew = xm + (xm - xl) * ((fxl - fxu) / Abs(fxl - fxu) * fxm) / Sqr(fxm * fxm - fxl * fxu)
+    If firstCycle = True Then
       xrOld = xrNew
       firstCycle = False
-    Else 
-      err = Abs((xrNew - xrOld)/xrNew) * 100
+    Else
+      err = Abs((xrNew - xrOld) / xrNew) * 100
       xrOld = xrNew
     End If
-    if xm < xr then
-      if fxm * fxr < 0 then
+    If xm < xr Then
+      If fxm * fxr < 0 Then
         xl = xm
-        xu = xr
-      ElseIf fxl * fxm < 0 then
+        xu = xrNew
+      ElseIf fxl * fxm < 0 Then
         xu = xm
       Else
-        xl = xr
+        xl = xrNew
       End If
     Else
-      if fxm * fxr < 0 then
-        xl = xr
+      If fxm * fxr < 0 Then
+        xl = xrNew
         xu = xm
-      ElseIf fxl * fxm < 0 then
-        xu = xr
+      ElseIf fxl * fxm < 0 Then
+        xu = xrNew
       Else
         xl = xm
       End If
     End If
   Loop
-  solve = xr
+  solve = xrNew
 End Function
 
 'Function helps to abstract from our formula and avoid redundant copying of formula when calculating function of xl, xm, xu ad xr
-Public Function calculateF(A, B, X as Double) as Double
+Private Function calculateF(A As Double, B As Double, X As Double) As Double
   'Operator "^" is not used due to reported malfunctions on older versions of excel
-  returnVal = X*X*X - X*X + X*(A - B - B*B) - A*B
+  calculateF = X * X * X - X * X + X * (A - B - B * B) - A * B
 End Function
+
