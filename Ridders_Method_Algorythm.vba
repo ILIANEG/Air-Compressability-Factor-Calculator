@@ -6,9 +6,9 @@ Public Function solve(A As Double, B As Double) As Double
   firstCycle = True
   err = 100
   xl = 0
-  xu = 2
+  xu = findXu(A, B)
   'while loop that runs Rider's algorythm until the seeking precision is reached
-  Do Until err < 0.0000000001
+  Do Until err < 0.00000000000001
     xm = (xl + xu) / 2
     fxl = calculateF(A, B, xl)
     fxm = calculateF(A, B, xm)
@@ -50,11 +50,13 @@ Private Function calculateF(A As Double, B As Double, X As Double) As Double
   calculateF = X * X * X - X * X + X * (A - B - B * B) - A * B
 End Function
 
-Private Function findXu(A, B)
-  Dim xu As Double, Dim fxu As Double
+Private Function findXu(A As Double, B As Double) As Double
+  Dim xu As Double, fxu As Double
   xu = 0
+  fxu = calculateF(A, B, xu)
   Do Until fxu > 0
     xu = xu + 0.5
-    fxu = calculateF(A, B, fxu)
+    fxu = calculateF(A, B, xu)
   Loop
   findXu = xu
+End Function
