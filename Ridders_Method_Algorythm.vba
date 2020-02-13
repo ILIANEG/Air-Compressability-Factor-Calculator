@@ -5,8 +5,8 @@ Public Function solve(A As Double, B As Double) As Double
   Dim firstCycle As Boolean
   firstCycle = True
   err = 100
-  xl = 0
   xu = findXu(A, B)
+  xl = xu - 0.5
   'while loop that runs Rider's algorythm until the seeking precision is reached
   Do Until err < 0.00000000000001
     xm = (xl + xu) / 2
