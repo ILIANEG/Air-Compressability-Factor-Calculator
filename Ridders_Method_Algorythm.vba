@@ -18,7 +18,7 @@ Private Function solve() As Double
   xu = findXu()
   xl = xu - 1
   'while loop that runs Rider's algorythm until the seeking precision is reached
-  Do Until err < 0.00000000000001
+  Do Until err < 0.000001
     xm = (xl + xu) / 2
     fxl = calculateF(xl)
     fxm = calculateF(xm)
