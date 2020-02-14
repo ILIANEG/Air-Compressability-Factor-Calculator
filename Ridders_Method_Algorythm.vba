@@ -3,7 +3,7 @@ Option Explicit
 Dim a As Double, b As Double
 
 'Function that sets module variables and 
-Public Function StartRidders(x As Double, y As Double) As Double
+Public Function StartRidders() As Double
   a = x
   b = y
   StartRidders = solve()
