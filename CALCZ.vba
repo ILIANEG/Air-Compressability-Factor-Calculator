@@ -19,7 +19,7 @@ Private Function Solve() As Double
   firstCycle = True
   err = 100
   xu = findXu()
-  xl = xu - 0.01
+  xl = xu - 1
   'while loop that runs Rider's algorythm until the seeking precision is reached
   Do Until err < 1E-06
     xm = (xl + xu) / 2
@@ -35,6 +35,8 @@ Private Function Solve() As Double
       xrOld = xrNew
     End If
     If xm < xr Then
+      If fxl * fxm < 0 And fxu * fxm < 0 Then
+        fxu = fxm
       If fxm * fxr < 0 Then
         xl = xm
         xu = xrNew
@@ -44,7 +46,9 @@ Private Function Solve() As Double
         xl = xrNew
       End If
     Else
-      If fxm * fxr < 0 Then
+      If fxl * fxm < 0 And fxu * fxm < 0 Then
+        xu = xr
+      ElseIf fxm * fxr < 0 Then
         xl = xrNew
         xu = xm
       ElseIf fxl * fxm < 0 Then
@@ -68,7 +72,7 @@ Private Function findXu() As Double
   xu = 0
   fxu = calculateF(xu)
   Do Until fxu > 0
-    xu = xu + 0.01
+    xu = xu + 1
     fxu = calculateF(xu)
   Loop
   findXu = xu
