@@ -2,33 +2,26 @@ Option Explicit
 'Module variables announcment
 Dim a As Double, b As Double
 
-Public Function CALCZ (P As Double, T As Double, PC As Double, TC As Double, W As Double) As Double
-  Dim s_a As Double, s_b As Double, alph As Double, a As Double, b As DOuble
-  s_a = (2955.119117 * (TC)^2)/(PC)
-  s_b = (7.203658541 * (TC))/(PC)
-  alph = (1 + (0.480+1.574*(W)-0.176*(W^2))*(1-((T)/(TC))^0.5))^2
-  a = ((s_a)*(alph)*(P))/((6913.044464)*(T^2))
-  b = ((s_b)*(P))/((83.14472)*(T))
-  CALCZ = StartRidders()
-End Function 
-
-'Function that sets module variables and 
-Public Function StartRidders() As Double
-  a = x
-  b = y
-  StartRidders = solve()
+Public Function CALCZ(P As Double, T As Double, PC As Double, TC As Double, W As Double) As Double
+  Dim s_a As Double, s_b As Double, alph As Double
+  s_a = (2955.119117 * (TC) ^ 2) / (PC)
+  s_b = (7.203658541 * (TC)) / (PC)
+  alph = (1 + (0.48 + 1.574 * (W) - 0.176 * (W ^ 2)) * (1 - ((T) / (TC)) ^ 0.5)) ^ 2
+  a = ((s_a) * (alph) * (P)) / ((6913.044464) * (T ^ 2))
+  b = ((s_b) * (P)) / ((83.14472) * (T))
+  CALCZ = Solve()
 End Function
 
 'Function that calculates root using ridder's algorythm
-Private Function solve() As Double
+Private Function Solve() As Double
   Dim xl As Double, xm As Double, xu As Double, xr As Double, fxl As Double, fxm As Double, fxr As Double, fxu As Double, xrOld As Double, xrNew As Double, fxrNew As Double, err As Double
   Dim firstCycle As Boolean
   firstCycle = True
   err = 100
   xu = findXu()
-  xl = xu - 1
+  xl = xu - 0.01
   'while loop that runs Rider's algorythm until the seeking precision is reached
-  Do Until err < 0.000001
+  Do Until err < 1E-06
     xm = (xl + xu) / 2
     fxl = calculateF(xl)
     fxm = calculateF(xm)
@@ -61,7 +54,7 @@ Private Function solve() As Double
       End If
     End If
   Loop
-  solve = xrNew
+  Solve = xrNew
 End Function
 
 'Function helps to abstract from our formula and avoid redundant copying of formula when calculating function of xl, xm, xu ad xr
@@ -75,9 +68,8 @@ Private Function findXu() As Double
   xu = 0
   fxu = calculateF(xu)
   Do Until fxu > 0
-    xu = xu + 1
+    xu = xu + 0.01
     fxu = calculateF(xu)
   Loop
   findXu = xu
 End Function
-
