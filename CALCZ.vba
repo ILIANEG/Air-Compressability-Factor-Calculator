@@ -1,6 +1,6 @@
 Option Explicit
 'Module variables announcment
-Dim a As Double, b As Double, xl As Double
+Dim a As Double, b As Double
 
 Public Function CALCZ(P As Double, T As Double, PC As Double, TC As Double, W As Double) As Double
   Dim s_a As Double, s_b As Double, alph As Double
@@ -14,14 +14,14 @@ End Function
 
 'Function that calculates root using ridder's algorythm
 Private Function Solve() As Double
-  Dim xm As Double, xu As Double, xr As Double, fxl As Double, fxm As Double, fxr As Double, fxu As Double, xrOld As Double, xrNew As Double, fxrNew As Double, err As Double
+  Dim xl As Double, xm As Double, xu As Double, xr As Double, fxl As Double, fxm As Double, fxr As Double, fxu As Double, xrOld As Double, xrNew As Double, fxrNew As Double, err As Double
   Dim firstCycle As Boolean
   firstCycle = True
   err = 100
   xu = findXu()
-  xl = 
+  xl = xu - 0.005
   'while loop that runs Rider's algorythm until the seeking precision is reached
-  Do Until err < 1E-06
+  Do Until err < 0.000001
     xm = (xl + xu) / 2
     fxl = calculateF(xl)
     fxm = calculateF(xm)
@@ -64,21 +64,12 @@ Private Function calculateF(x As Double) As Double
 End Function
 
 Private Function findXu() As Double
-  Dim xu As Double, fxu As Double, step As Double, found As Boolean
+  Dim xu As Double, fxu As Double
   xu = 0
   fxu = calculateF(xu)
-  fxl = calculateF(0)
-  step = 1
-  found = False
-  Do Until fxu > 0 And Not found 
-    xu = xu + step
+  Do Until fxu > 0
+    xu = xu + 0.005
     fxu = calculateF(xu)
-    found = True
-    If fxl * fxu > 0 Then
-      xu = xu - step
-      step = step / 2
-      found = False
   Loop
-    findXu = xu
-    xl = xu - step
+  findXu = xu
 End Function
