@@ -1,6 +1,6 @@
 Option Explicit
 'Module variables announcment
-Dim a As Double, b As Double
+Dim a As Double, b As Double, xl As Double
 
 Public Function CALCZ(P As Double, T As Double, PC As Double, TC As Double, W As Double) As Double
   Dim s_a As Double, s_b As Double, alph As Double
@@ -14,12 +14,12 @@ End Function
 
 'Function that calculates root using ridder's algorythm
 Private Function Solve() As Double
-  Dim xl As Double, xm As Double, xu As Double, xr As Double, fxl As Double, fxm As Double, fxr As Double, fxu As Double, xrOld As Double, xrNew As Double, fxrNew As Double, err As Double
+  xm As Double, xu As Double, xr As Double, fxl As Double, fxm As Double, fxr As Double, fxu As Double, xrOld As Double, xrNew As Double, fxrNew As Double, err As Double
   Dim firstCycle As Boolean
   firstCycle = True
   err = 100
   xu = findXu()
-  xl = xu - 1
+  xl = 
   'while loop that runs Rider's algorythm until the seeking precision is reached
   Do Until err < 1E-06
     xm = (xl + xu) / 2
@@ -35,11 +35,7 @@ Private Function Solve() As Double
       xrOld = xrNew
     End If
     If xm < xr Then
-      If fxl * fxm < 0 And fxu * fxm < 0 Then
-        xu = xm
-      ElseIf 0 < fxl * fxm And 0 < fxu * fxm Then
-        xu = xm
-      ElseIf fxm * fxr < 0 Then
+      If fxm * fxr < 0 Then
         xl = xm
         xu = xrNew
       ElseIf fxl * fxm < 0 Then
@@ -48,11 +44,7 @@ Private Function Solve() As Double
         xl = xrNew
       End If
     Else
-      If fxl * fxm < 0 And fxu * fxm < 0 Then
-        xu = xrNew
-      ElseIf 0 < fxl * fxm And 0 < fxu * fxm Then
-        xu = xrNew
-      ElseIf fxm * fxr < 0 Then
+      If fxm * fxr < 0 Then
         xl = xrNew
         xu = xm
       ElseIf fxl * fxm < 0 Then
@@ -72,12 +64,18 @@ Private Function calculateF(x As Double) As Double
 End Function
 
 Private Function findXu() As Double
-  Dim xu As Double, fxu As Double
+  Dim xu As Double, fxu As Double, step As Double
   xu = 0
   fxu = calculateF(xu)
-  Do Until fxu > 0
-    xu = xu + 1
+  fxl = calculateF(0)
+  step = 1
+  Do Until fxu > 0 and fxl * fxu < 0
+    xu = xu + step
     fxu = calculateF(xu)
+    If fxl * fxu > 0 Then
+      xu = xu - step
+      step = step / 2
   Loop
   findXu = xu
+    xl = xu - step
 End Function
