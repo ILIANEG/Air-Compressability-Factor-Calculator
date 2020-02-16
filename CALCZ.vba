@@ -36,8 +36,10 @@ Private Function Solve() As Double
     End If
     If xm < xr Then
       If fxl * fxm < 0 And fxu * fxm < 0 Then
-        fxu = fxm
-      If fxm * fxr < 0 Then
+        xu = xm
+      ElseIf 0 < fxl * fxm And 0 < fxu * fxm Then
+        xu = xm
+      ElseIf fxm * fxr < 0 Then
         xl = xm
         xu = xrNew
       ElseIf fxl * fxm < 0 Then
@@ -47,6 +49,8 @@ Private Function Solve() As Double
       End If
     Else
       If fxl * fxm < 0 And fxu * fxm < 0 Then
+        xu = xr
+      ElseIf 0 < fxl * fxm And 0 < fxu * fxm Then
         xu = xr
       ElseIf fxm * fxr < 0 Then
         xl = xrNew
