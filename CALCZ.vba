@@ -64,17 +64,20 @@ Private Function calculateF(x As Double) As Double
 End Function
 
 Private Function findXu() As Double
-  Dim xu As Double, fxu As Double, step As Double
+  Dim xu As Double, fxu As Double, step As Double, found As Boolean
   xu = 0
   fxu = calculateF(xu)
   fxl = calculateF(0)
   step = 1
-  Do Until fxu > 0 and fxl * fxu < 0
+  found = False
+  Do Until fxu > 0 And Not found 
     xu = xu + step
     fxu = calculateF(xu)
+    found = True
     If fxl * fxu > 0 Then
       xu = xu - step
       step = step / 2
+      found = False
   Loop
     findXu = xu
     xl = xu - step
