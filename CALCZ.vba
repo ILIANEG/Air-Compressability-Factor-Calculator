@@ -14,7 +14,7 @@ End Function
 
 'Function that calculates root using ridder's algorythm
 Private Function Solve() As Double
-  xm As Double, xu As Double, xr As Double, fxl As Double, fxm As Double, fxr As Double, fxu As Double, xrOld As Double, xrNew As Double, fxrNew As Double, err As Double
+  Dim xm As Double, xu As Double, xr As Double, fxl As Double, fxm As Double, fxr As Double, fxu As Double, xrOld As Double, xrNew As Double, fxrNew As Double, err As Double
   Dim firstCycle As Boolean
   firstCycle = True
   err = 100
@@ -76,6 +76,6 @@ Private Function findXu() As Double
       xu = xu - step
       step = step / 2
   Loop
-  findXu = xu
+    findXu = xu
     xl = xu - step
 End Function
