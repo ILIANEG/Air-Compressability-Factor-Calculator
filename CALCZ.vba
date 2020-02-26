@@ -7,8 +7,8 @@ Public Function CALCZ(P As Double, T As Double, PC As Double, TC As Double, W As
   s_a = (0.42747 * (TC) ^ 2) / (PC)
   s_b = (0.08664 * (TC)) / (PC)
   alph = (1 + (0.48 + 1.574 * (W) - 0.176 * (W ^ 2)) * (1 - ((T) / (TC)) ^ 0.5)) ^ 2
-  a = ((s_a) * (alph) * (P)) / ((6913.044464) * (T ^ 2))
-  b = ((s_b) * (P)) / ((83.14472) * (T))
+  a = ((s_a) * (alph) * (P)) / (T ^ 2)
+  b = ((s_b) * (P)) / (T)
   CALCZ = Solve()
 End Function
 
