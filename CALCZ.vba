@@ -1,6 +1,6 @@
 Option Explicit
 'Module variables announcment
-Dim a As Double, b As Double
+Dim a As Double, b As Double, dstep As Double
 
 Public Function CALCZ(P As Double, T As Double, PC As Double, TC As Double, W As Double) As Double
   Dim s_a As Double, s_b As Double, alph As Double
@@ -19,7 +19,7 @@ Private Function Solve() As Double
   firstCycle = True
   err = 100
   xu = findXu()
-  xl = xu - 0.005
+  xl = xu - dstep
   'while loop that runs Rider's algorythm until the seeking precision is reached
   Do Until err < 0.000001
     xm = (xl + xu) / 2
@@ -64,12 +64,30 @@ Private Function calculateF(x As Double) As Double
 End Function
 
 Private Function findXu() As Double
-  Dim xu As Double, fxu As Double
+  Dim xu As Double, fxu As Double, i As Double
+  dstep = 0.0001
   xu = 0
   fxu = calculateF(xu)
+  
   Do Until fxu > 0
-    xu = xu + 0.005
+    xu = xu + dstep
     fxu = calculateF(xu)
   Loop
-  findXu = xu
+  For i = dstep To 10 Step dstep
+    If fxu * calculateF(xu + i) < 0 Then
+        dstep = dstep * 10
+        xu = xu + i
+        fxu = calculateF(xu)
+        Exit For
+    End If
+   Next i
+   For i = dstep To 10 Step dstep
+     If fxu * calculateF(xu + i) < 0 Then
+        xu = xu + i
+        fxu = calculateF(xu)
+        Exit For
+     End If
+   Next i
+   findXu = xu
+  
 End Function
