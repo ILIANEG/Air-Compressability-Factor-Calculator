@@ -18,10 +18,10 @@ Private Function Solve() As Double
   Dim firstCycle As Boolean
   firstCycle = True
   err = 100
-  xu = findXu()
-  xl = xu - dstep
+  xl = findXl()
+  xu = xl + dstep
   'while loop that runs Rider's algorythm until the seeking precision is reached
-  Do Until err < 0.000001
+  Do Until err < 0.0001
     xm = (xl + xu) / 2
     fxl = calculateF(xl)
     fxm = calculateF(xm)
@@ -60,34 +60,18 @@ End Function
 'Function helps to abstract from our formula and avoid redundant copying of formula when calculating function of xl, xm, xu ad xr
 Private Function calculateF(x As Double) As Double
   'Operator "^" is not used due to reported malfunctions on older versions of excel
-  calculateF = x * x * x - x * x + x * (a - b - b * b) - a * b
+  calculateF = x ^ 3 - x ^ 2 + x * (a - b - b ^ 2) - a * b
 End Function
 
-Private Function findXu() As Double
-  Dim xu As Double, fxu As Double, i As Double
+Private Function findXl() As Double
+  Dim xl As Double, fxl As Double, i As Double
   dstep = 0.0001
-  xu = 0
-  fxu = calculateF(xu)
-  
-  Do Until fxu > 0
-    xu = xu + dstep
-    fxu = calculateF(xu)
+  xl = 2
+  fxl = calculateF(xl)
+  'finds first root'
+  Do Until fxl * calculateF(xl) < 0
+    xl = xl - dstep
   Loop
-  For i = dstep To 10 Step dstep
-    If fxu * calculateF(xu + i) < 0 Then
-        dstep = dstep * 10
-        xu = xu + i
-        fxu = calculateF(xu)
-        Exit For
-    End If
-   Next i
-   For i = dstep To 10 Step dstep
-     If fxu * calculateF(xu + i) < 0 Then
-        xu = xu + i
-        fxu = calculateF(xu)
-        Exit For
-     End If
-   Next i
-   findXu = xu
+    findXl = xl
   
 End Function
