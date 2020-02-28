@@ -23,7 +23,10 @@ Private Function Solve() As Double
 	firstCycle = True
 	err = 100
 	'Uses decrementing step to find upper intercept'
-	Call findXl()
+	Call findXl
+	If xl <= 0 Then
+		Solve = 0
+	End If
 	'While loop that runs Rider's algorythm until the seeking precision is reached
 	Do Until err < 0.0001
 		xm = (xl + xu) / 2
